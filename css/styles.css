@@ -1,0 +1,29 @@
+body{
+    font-family: Arial;
+}
+
+table{
+    width: 100%
+}
+
+/* unvisited link */
+a{  cursor: pointer;
+}
+a:link {
+    color: #999999;
+}
+
+/* visited link */
+a:visited {
+    color: #aeaeae;
+}
+
+/* mouse over link */
+a:hover {
+    color: #ff0000;
+}
+
+/* selected link */
+a:active {
+    color: #0000FF;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Listings</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="./js/lodash.js"></script>
+    <script src="./js/jobListingController.js"></script>
+</head>
+
+<body ng-app="JobListingPanel">
+
+<div ng-controller="JobListingController" data-ng-init="init()">
+    <h1>Job-Track-O-Tron <span ng-show="company && company.length > 0"></span>: {{company}}</h1>
+    <div><a ng-click="showJobList()">Return To List</a></div>
+
+    <table border="0" ng-show="activeForm === 'sites'">
+        <th>List</th>
+        <th>Id</th>
+        <th></th>
+        <tr ng-repeat="job in jobs">
+            <td>{{job.description}}</td>
+            <td>{{job.id}}</td>
+            <td><a ng-click="showJobList(job.id, job.description)">Get List</a></td>
+        </tr>
+    </table>
+
+    <table border="0" ng-show="activeForm === 'jobs'">
+        <th>Title</th>
+        <th>City</th>
+        <th>State</th>
+        <tr ng-repeat="job in joblist">
+            <td><a target="_blank" href="{{job.href}}">{{job.title}}</a></td>
+            <td>{{job.city}}</td>
+            <td>{{job.state}}</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
