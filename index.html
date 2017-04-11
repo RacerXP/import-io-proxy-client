@@ -13,8 +13,17 @@
 
 <div ng-controller="JobListingController" data-ng-init="init()">
     <h1>Job-Track-O-Tron <span ng-show="company && company.length > 0"></span>: {{company}}</h1>
-    <div><a ng-click="showJobList()">Return To List</a></div>
 
+    <ul>
+        <li><a ng-click="showJobList()">Return To List</a></li>
+        <li><a ng-click="showJobList(null,'All Jobs', true)">Show All Jobs</a></li>
+    </ul>
+    <!--
+    <div style="width:100%">
+    <span style="text-align: left"><a ng-click="showJobList()">Return To List</a></span>
+    <span style="text-align: right"><a ng-click="showJobList(null,'All Jobs', true)">Show All Jobs</a></span>
+    </div>
+    -->
     <table border="0" ng-show="activeForm === 'sites'">
         <th>List</th>
         <th>Id</th>

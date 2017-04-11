@@ -4,29 +4,42 @@ angular.module('JobListingPanel', [])
         $scope.jobs = [];
         $scope.company = '';
 
+        function parseAggregation(data){
+
+        }
+
         function parseJobList(data) {
             return _.map(data, function (d) {
-                return {
-                    city: d.City[0].text,
-                    state: d.State[0].text,
+                const obj =  {
+                    city: '',
+                    state: '',
                     title: d.Title[0].text,
-                    href: d.Title[0].href
+                    href: d.Title[0].href || d.Url[0].text
                 };
+                if(Array.isArray(d.City)) obj.city = d.City[0].text;
+                if(Array.isArray(d.State)) obj.state = d.State[0].text;
+
+                return obj;
             });
         }
 
-        function getJobsList(id) {
+        function getJobsList(id, useDataAggregation) {
             $scope.errorMessage = '';
             var url = 'http://localhost:3000/api';
             if (id) {
                 var url = 'http://localhost:3000/api/' + id;
             }
+
+            if (useDataAggregation) {
+                var url = 'http://localhost:3000/api/?aggregate=true';
+            }
+
             $http({
                 method: 'GET',
                 url: url,
             }).then(function successCallback(res) {
-                if (id) {
-                    var list = parseJobList(res.data.result.extractorData.data[0].group);
+                if (id || useDataAggregation) {
+                    var list = parseJobList(res.data);
                     displayJobList(list);
                     return;
                 }
@@ -52,9 +65,9 @@ angular.module('JobListingPanel', [])
             $scope.activeForm = 'jobs'
         }
 
-        $scope.showJobList = function (id, description) {
+        $scope.showJobList = function (id, description, useAggregation) {
             $scope.company = description;
-            getJobsList(id);
+            getJobsList(id, useAggregation);
         }
         $scope.init = function () {
             getJobsList();
